@@ -6,24 +6,43 @@
 	ECHO Created by Daniel Santos
 
 	ECHO.
+	ECHO E - English
+	ECHO P - Portuguese
+	ECHO.
+	CHOICE /c EP /m "Choice you language: "
+	ECHO.
+	IF %errorlevel%==1 SET lang=.\lang\english.lng
+	IF %errorlevel%==2 SET lang=.\lang\portuguese.lng
 
 	:LANGSET
-	CALL:INI "english.lng" nofile nofilestr
-	CALL:INI "english.lng" dffdetected dffdetectedstr
-	CALL:INI "english.lng" txddetected txddetectedstr
-	CALL:INI "english.lng" coldetected coldetectedstr
-	CALL:INI "english.lng" selecttype selecttypestr
-	CALL:INI "english.lng" dfffile dfffilestr
-	CALL:INI "english.lng" txdfile txdfilestr
-	CALL:INI "english.lng" filekind filekindstr
-	CALL:INI "english.lng" typeplatform typeplatformstr
-	CALL:INI "english.lng" typeoutput typeoutputstr
-	CALL:INI "english.lng" plat platstr
-	REM CALL:INI "english.lng" 
-	REM CALL:INI "english.lng" 
-	REM CALL:INI "english.lng" 
-	REM CALL:INI "english.lng" 
-	REM CALL:INI "english.lng" 
+	CALL:INI "%lang%" nofile nofilestr
+	CALL:INI "%lang%" dffdetected dffdetectedstr
+	CALL:INI "%lang%" txddetected txddetectedstr
+	CALL:INI "%lang%" coldetected coldetectedstr
+	CALL:INI "%lang%" selecttype selecttypestr
+	CALL:INI "%lang%" dfffile dfffilestr
+	CALL:INI "%lang%" txdfile txdfilestr
+	CALL:INI "%lang%" filekind filekindstr
+	CALL:INI "%lang%" typeplatform typeplatformstr
+	CALL:INI "%lang%" typeoutput typeoutputstr
+	CALL:INI "%lang%" plat platstr
+	CALL:INI "%lang%" filelist fileliststr
+	CALL:INI "%lang%" cmodeltype cmodeltypestr
+	CALL:INI "%lang%" genericmodel genericmodelstr
+	CALL:INI "%lang%" mapmodel mapmodelstr
+	CALL:INI "%lang%" pedmodel pedmodelstr
+	CALL:INI "%lang%" vehiclemodel vehiclemodelstr
+	CALL:INI "%lang%" modelkind modelkindstr
+	CALL:INI "%lang%" smodeltype smodeltypestr
+	CALL:INI "%lang%" cmeshtype cmeshtypestr
+	CALL:INI "%lang%" tristrip tristripstr
+	CALL:INI "%lang%" tripdesca tripdescastr
+	CALL:INI "%lang%" tripdescb tripdescbstr 
+	CALL:INI "%lang%" defmesh defmeshstr
+	CALL:INI "%lang%" defdesc defdescstr 
+	CALL:INI "%lang%" cmesh cmeshstr
+	CALL:INI "%lang%" convprop convpropstr
+	CALL:INI "%lang%" finconv finconvstr
 
 	:INIT
 
@@ -121,7 +140,7 @@
 	ECHO.
 
 
-	ECHO Here are the models you want to convert:
+	ECHO %fileliststr%
 	ECHO. 
 	DIR /b Default
 
@@ -129,53 +148,52 @@
 
 	:MODELC
 	ECHO.
-	ECHO Choose the type of model you want to convert:
+	ECHO %cmodeltypestr%
 	ECHO.
-	ECHO G - Generic Model
-	ECHO M - Map Model
-	ECHO P - Ped Model
-	ECHO V - Vehicle Model
+	ECHO %genericmodelstr%
+	ECHO %mapmodelstr%
+	ECHO %pedmodelstr%
+	ECHO %vehiclemodelstr%
 	ECHO.
 
-	CHOICE /c GMPV /m "What kind of model are you converting?"
+	CHOICE /c GMPV /m "%modelkindstr%"
 
 	IF %errorlevel%==1 (
-	SET modeltype=Generic Model
+	SET modeltype=%genericmodelstr%
 	)
 	IF %errorlevel%==2 (
-	SET modeltype=Map Model
+	SET modeltype=%mapmodelstr%
 	SET model= --ps2sabuilding
 	)
 	IF %errorlevel%==3 (
-	SET modeltype=Ped Model
+	SET modeltype=%pedmodelstr%
 	SET model= --ps2saped
 	)
 	IF %errorlevel%==4 (
-	SET modeltype=Vehicle Model
+	SET modeltype=%vehiclemodelstr%
 	SET model= --ps2sacar
 	CALL:COLCONVERT
 	)
 
 	ECHO.
-	ECHO Model Type: %modeltype%
+	ECHO %smodeltypestr% %modeltype%
 
 	ECHO.
-	ECHO Choose the type of mesh that will be used in the models:
+	ECHO %cmeshtypstr%
 	ECHO.
 
-	ECHO T - Tristrip Mesh
-	ECHO [RECOMMENDED] Creates a mesh based on a series of connected triangles 
-	ECHO sharing vertices, allowing more efficient use of memory.
+	ECHO %tristripstr%
+	ECHO %tripdescastr%
+	ECHO %tripdescbstr%
+	ECHO.
+	ECHO %defmeshstr%
+	ECHO %defdescstr%
 	ECHO.
 
-	ECHO D - Default Mesh
-	ECHO Uses standard triangle mesh, recommended to use only if tristrip does not work.
-	ECHO.
 
-
-	CHOICE /c TD /m "What type of mesh do you want to use on the models?"
+	CHOICE /c TD /m "%cmeshstr%"
 	ECHO.
-	ECHO Conversion Properties:
+	ECHO %convpropstr%
 	ECHO Platform: %platformname%
 	ECHO Type: %modeltype%
 	IF %ERRORLEVEL%==1 (
@@ -203,7 +221,7 @@
 	)
 
 	:END
-	ECHO Conversion has finished, here are the converted files:
+	ECHO %finconvstr%
 	ECHO. 
 	DIR /b Converted
 	ECHO.
