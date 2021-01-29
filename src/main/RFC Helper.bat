@@ -8,11 +8,13 @@
 	ECHO.
 	ECHO E - English
 	ECHO P - Portuguese
+	ECHO S - Spanish
 	ECHO.
 	CHOICE /c EP /m "Choice you language: "
 	ECHO.
 	IF %errorlevel%==1 SET lang=.\lang\english.lng
 	IF %errorlevel%==2 SET lang=.\lang\portuguese.lng
+	IF %errorlevel%==3 SET lang=.\lang\spanish.lng
 
 	:LANGSET
 	CALL:INI "%lang%" nofile nofilestr
