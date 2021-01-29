@@ -1,20 +1,21 @@
 	@ECHO OFF
 
+	:READINI
+	CALL:INI ".\sets\settings.ini" CmdColor cmdcol
+	CALL:INI ".\sets\settings.ini" Language lng
+	IF %lng%==english SET lang=.\lang\english.lng
+	IF %lng%==portuguese SET lang=.\lang\portuguese.lng
+	IF %lng%==spanish SET lang=.\lang\spanish.lng
+	IF %lng%==italian SET lang=.\lang\italian.lng
+	IF %lng%==polish SET lang=.\lang\polish.lng
+	IF %lng%==german SET lang=.\lang\german.lng
+	IF %lng%==french SET lang=.\lang\french.lng
+	COLOR %cmdcol%
+
 	TITLE Renderware File Converter Helper
 
 	ECHO Renderware File Converter Helper
 	ECHO Created by Daniel Santos
-
-	ECHO.
-	ECHO E - English
-	ECHO P - Portuguese
-	ECHO S - Spanish
-	ECHO.
-	CHOICE /c EP /m "Choice you language: "
-	ECHO.
-	IF %errorlevel%==1 SET lang=.\lang\english.lng
-	IF %errorlevel%==2 SET lang=.\lang\portuguese.lng
-	IF %errorlevel%==3 SET lang=.\lang\spanish.lng
 
 	:LANGSET
 	CALL:INI "%lang%" nofile nofilestr
